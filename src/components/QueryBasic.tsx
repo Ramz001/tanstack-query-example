@@ -3,12 +3,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { User } from "./user.types";
 import { fetchUsers } from "./user.action";
+import { useEffect, useState } from "react";
 
 export default function QueryBasic() {
+  const [isMounted, setMounted] = useState(false);
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (isLoading)
     return <div className="text-center text-white">Loading...</div>;
