@@ -2,10 +2,11 @@
 
 import QueryBasic from "@/components/QueryBasic";
 import MutationBasic from "@/components/MutationBasic";
+import QueryPaginated from "@/components/QueryPaginated";
 
 export default function Home() {
   return (
-    <main className="container mx-auto bg-neutral-800 p-4 mt-4 rounded-lg min-h-screen">
+    <main className="container mx-auto flex gap-4 flex-col bg-neutral-800 p-4 mt-4 rounded-lg min-h-screen">
       <h1 className="font-bold text-3xl text-white mb-6 text-center">
         Tanstack Query - Users
       </h1>
@@ -13,6 +14,7 @@ export default function Home() {
         <MutationBasic />
         <QueryBasic />
       </div>
+      <QueryPaginated />
     </main>
   );
 }
