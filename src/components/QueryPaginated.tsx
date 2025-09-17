@@ -30,7 +30,7 @@ export default function QueryPaginated() {
       <div className="text-center text-red-500">Error: {error.message}</div>
     );
 
-  if (!data?.users || data.users.length === 0) {
+  if (!data?.users || data.users?.length === 0) {
     return <div className="text-center text-neutral-400">No users found</div>;
   }
 
