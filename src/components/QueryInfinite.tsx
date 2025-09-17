@@ -2,19 +2,10 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
+import { User } from "./user.types";
+import { fetchUsersInfinite } from "./user.action";
 
-async function fetchUsers({ pageParam = 0 }) {
-  const limit = 6; // adjust per page size
-  const res = await fetch(
-    `https://dummyjson.com/users?limit=${limit}&skip=${pageParam}`
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch users");
-  }
-  return res.json();
-}
-
-export default function InfiniteUsers() {
+export default function QueryInfinite() {
   const {
     data,
     error,
@@ -25,7 +16,7 @@ export default function InfiniteUsers() {
     isError,
   } = useInfiniteQuery({
     queryKey: ["users", "infinite"],
-    queryFn: fetchUsers,
+    queryFn: fetchUsersInfinite,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       const total = lastPage.total; // API returns total count
@@ -84,8 +75,8 @@ export default function InfiniteUsers() {
                 <span className="font-medium">Role:</span> {user.role}
               </p>
               <p className="text-sm">
-                <span className="font-medium">Company:</span> {user.company.name}{" "}
-                ({user.company.title})
+                <span className="font-medium">Company:</span>{" "}
+                {user.company.name} ({user.company.title})
               </p>
               <p className="text-sm">
                 <span className="font-medium">Location:</span>{" "}
@@ -109,22 +100,4 @@ export default function InfiniteUsers() {
       </div>
     </div>
   );
-}
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  email: string;
-  image: string;
-  role: string;
-  address: {
-    city: string;
-    state: string;
-  };
-  company: {
-    name: string;
-    title: string;
-  };
 }

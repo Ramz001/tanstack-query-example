@@ -3,7 +3,7 @@
 import QueryBasic from "@/components/QueryBasic";
 import MutationBasic from "@/components/MutationBasic";
 import QueryPaginated from "@/components/QueryPaginated";
-import InfiniteUsers from "@/components/QueryInfinite";
+import QueryInfinite from "@/components/QueryInfinite";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
         <QueryBasic />
       </div>
       <QueryPaginated />
-      <InfiniteUsers />
+      <QueryInfinite />
     </main>
   );
 }

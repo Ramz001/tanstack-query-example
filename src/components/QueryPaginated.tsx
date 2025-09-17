@@ -2,25 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-
-const PER_PAGE = 5;
-
-async function fetchPosts(page: number, limit: number = 5) {
-  const res = await fetch(
-    `https://dummyjson.com/users?limit=${limit}&skip=${(page - 1) * limit}`
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch posts");
-  }
-  return await res.json();
-}
+import { User } from "./user.types";
+import { fetchUsersPaginated, PER_PAGE } from "./user.action";
 
 export default function QueryPaginated() {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["users", page],
-    queryFn: () => fetchPosts(page, PER_PAGE),
+    queryFn: () => fetchUsersPaginated(page),
   });
 
   if (isLoading)
@@ -102,75 +92,4 @@ export default function QueryPaginated() {
       </div>
     </div>
   );
-}
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  maidenName?: string;
-  age: number;
-  gender: string;
-  email: string;
-  phone: string;
-  username: string;
-  password: string;
-  birthDate: string;
-  image: string;
-  bloodGroup: string;
-  height: number;
-  weight: number;
-  eyeColor: string;
-  hair: {
-    color: string;
-    type: string;
-  };
-  ip: string;
-  address: {
-    address: string;
-    city: string;
-    state: string;
-    stateCode: string;
-    postalCode: string;
-    coordinates: {
-      lat: number;
-      lng: number;
-    };
-    country: string;
-  };
-  macAddress: string;
-  university: string;
-  bank: {
-    cardExpire: string;
-    cardNumber: string;
-    cardType: string;
-    currency: string;
-    iban: string;
-  };
-  company: {
-    department: string;
-    name: string;
-    title: string;
-    address: {
-      address: string;
-      city: string;
-      state: string;
-      stateCode: string;
-      postalCode: string;
-      coordinates: {
-        lat: number;
-        lng: number;
-      };
-      country: string;
-    };
-  };
-  ein: string;
-  ssn: string;
-  userAgent: string;
-  crypto: {
-    coin: string;
-    wallet: string;
-    network: string;
-  };
-  role: string;
 }
