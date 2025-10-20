@@ -5,20 +5,22 @@ import { User } from "./user.types";
 import { fetchUsers } from "./user.action";
 import React from "react";
 
-export default function QueryBasic() {
+export default function QueryPrefetch() {
   const queryClient = useQueryClient();
 
-  // Prefetch users (e.g., when component mounts or on hover)
+  // Prefetch users when component mounts
   React.useEffect(() => {
     queryClient.prefetchQuery({
-      queryKey: ["users"],
+      queryKey: ["users", "prefetch"],
       queryFn: fetchUsers,
+      staleTime: 1000 * 60, // <-- keep prefetched data fresh for 1 minute
     });
   }, [queryClient]);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", "prefetch"],
     queryFn: fetchUsers,
+    staleTime: 1000 * 60, // <-- match staleTime here too
   });
 
   if (isLoading)
@@ -32,13 +34,13 @@ export default function QueryBasic() {
 
   return (
     <div>
-      {/* Example button to trigger prefetch manually */}
       <button
         className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
         onMouseEnter={() =>
           queryClient.prefetchQuery({
-            queryKey: ["users"],
+            queryKey: ["users", "prefetch"],
             queryFn: fetchUsers,
+            staleTime: 1000 * 60,
           })
         }
       >

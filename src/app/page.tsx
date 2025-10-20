@@ -4,6 +4,7 @@ import QueryBasic from "@/components/QueryBasic";
 import MutationBasic from "@/components/MutationBasic";
 import QueryPaginated from "@/components/QueryPaginated";
 import QueryInfinite from "@/components/QueryInfinite";
+import QueryPrefetch from "@/components/QueryPrefetch";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       </div>
       <QueryPaginated />
       <QueryInfinite />
+      <QueryPrefetch />
     </main>
   );
 }
